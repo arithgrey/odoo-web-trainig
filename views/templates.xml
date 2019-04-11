@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="index">
+        <title>Listado mail</title>
+        <t t-foreach="list_email" t-as="l">
+            <p>
+                <t t-esc="l"></t>
+            </p>
+        </t>
+    </template>
+</odoo>
