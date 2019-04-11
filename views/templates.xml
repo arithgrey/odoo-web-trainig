@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+
     <template id="index">
+
         <title>Listado mail</title>
+
         <t t-foreach="list_email" t-as="l">
             <p>
                 <t t-esc="l"></t>
@@ -17,13 +21,33 @@
             </li>
         </t>
 
-        <div t-att="{'class':'mi_clase', 'id':'mi_id'}">algo con atributos </div>
+        <div t-att="{'class':'mi_clase', 'id':'mi_id'}">algo con atributos</div>
         <t t-set="mi_variable" t-value="1 +3 "/>
         <div>
-            Mi variable calculada <t t-esc="mi_variable"/>
+            Mi variable calculada
+            <t t-esc="mi_variable"/>
         </div>
 
 
 
+
+        <t t-set='mi_variable_desde_otro_template' t-value="'Un valor desde el primer template'"/>
+
+        <t t-call="transactions_email.other_template">
+        </t>
+
+
+
     </template>
+
+    <template id="other_template">
+
+        <h1 t-att="{'class':'mi_clase', 'id':'mi_id'}">otro template</h1>
+        <p>
+            Mando este valor desde otro template ->  <t t-esc="mi_variable_desde_otro_template"></t>
+        </p>
+    </template>
+
+
+
 </odoo>
