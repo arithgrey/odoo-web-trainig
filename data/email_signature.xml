@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <template id="message_notification_email" inherit_id="mail.message_notification_email" priority="99">
+        <xpath expr="//div/p[last()]" position="replace">
+            <p style="color: #555555; margin-top:32px;">
+                Sent by
+                <a t-if="website_url" t-att-href="website_url" style="text-decoration:none; color: #875A7B;">
+                    <span t-esc="company.name"/>
+                </a>
+                <span t-if="not website_url" t-esc="company.name"/>
+            </p>
+        </xpath>
+    </template>
+    <!-- Replaces Powered By on these notifications -->
+    <template id="mail_notification_borders" inherit_id="mail.mail_notification_borders" priority="99">
+        <xpath expr="//tr[last()]" position="replace"/>
+    </template>
+
+    <template id="mail_notification_light" inherit_id="mail.mail_notification_light" priority="99">
+        <xpath expr="//tr[last()]" position="replace"/>
+    </template>
+
+    <template id="mail_notification_paynow" inherit_id="mail.mail_notification_paynow" priority="99">
+        <xpath expr="//tr[last()]" position="replace"/>
+    </template>
+    <!--Replace format button sale notifications-->
+    <template id="message_activity_assigned" inherit_id="mail.message_activity_assigned" priority="99">
+        <xpath expr="//div/p" position="replace">
+            <p style="margin: 16px 0px 16px 0px;">
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (activity.res_model, activity.res_id)"
+                   style="background: #000;
+border: 3px solid #000;
+-webkit-box-shadow: 3px 3px 0px 0px rgba(0,0,0,0.16);
+-moz-box-shadow: 3px 3px 0px 0px rgba(0,0,0,0.16);
+box-shadow: 3px 3px 0px 0px rgba(0,0,0,0.16);
+color: #fff;
+cursor: pointer;
+display: inline-block;
+font-family: 'apercubold';
+font-size: 12px;
+letter-spacing: 0.100em;
+margin: 18px 10px 0 10px;
+max-width: 195px;
+min-height: 52px;
+outline: 0px;
+padding: 9px;
+width: 30%;">
+                    View
+                    <t t-esc="model_description or 'document'"/>
+                </a>
+            </p>
+        </xpath>
+    </template>
+</odoo>
+

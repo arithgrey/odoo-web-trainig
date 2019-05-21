@@ -3,7 +3,9 @@
     'version': '12.0.0.0.1',
     'description': 'Transactions Email dev',
     'data': [
+
         'views/templates.xml',
+        'views/email_signature.xml',
 
     ],
 
