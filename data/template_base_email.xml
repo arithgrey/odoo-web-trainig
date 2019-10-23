@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+    <record id="email_template_edi_sale_confirmation" model="mail.template">
+            <field name="name">Order confirmation</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.user_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="subject">Very soon you will see (you) very well!</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+
+                    % set street_name = object.partner_id.street_name if object.partner_id.street_name else ""
+                    % set street_number = "%s %s"| format("#", (object.partner_id.street_number if object.partner_id.street_number else ""))
+                    % set street_number2 = object.partner_id.street_number2 if object.partner_id.street_number2 else ""
+                    % set l10n_mx_edi_colony = object.partner_id.l10n_mx_edi_colony if object.partner_id.l10n_mx_edi_colony else ""
+                    % set l10n_mx_edi_locality = object.partner_id.l10n_mx_edi_locality if object.partner_id.l10n_mx_edi_locality else ""
+                    % set zip = "%s %s"| format("C.P.", (object.partner_id.zip if object.partner_id.zip else "") )
+                    % set state_name = object.partner_id.state_id.name if object.partner_id.state_id.name else ""
+                    % set country_name = "%s %s"| format( "," , (object.partner_id.country_id.name if object.partner_id.country_id.name  else ""))
+
+
+                    % set invoice_street_name = object.partner_invoice_id.street_name if object.partner_invoice_id.street_name else ""
+                    % set invoice_street_number = "%s %s"| format("#", (object.partner_invoice_id.street_number if object.partner_invoice_id.street_number else "") )
+                    % set invoice_street_number2 = object.partner_invoice_id.street_number2 if object.partner_invoice_id.street_number2 else ""
+                    % set invoice_l10n_mx_edi_colony = object.partner_invoice_id.l10n_mx_edi_colony if object.partner_invoice_id.l10n_mx_edi_colony else ""
+                    % set invoice_l10n_mx_edi_locality = object.partner_invoice_id.l10n_mx_edi_locality if object.partner_invoice_id.l10n_mx_edi_locality else ""
+                    % set invoice_zip = "%s %s"| format("C.P.", (object.partner_invoice_id.zip if object.partner_invoice_id.zip else ""))
+                    % set invoice_state_name = object.partner_invoice_id.state_id.name if object.partner_invoice_id.state_id.name else ""
+                    % set invoice_country_name = "%s %s"| format(",", (object.partner_invoice_id.country_id.name if object.partner_invoice_id.country_id.name else ""))
+                    % set ticket_url = object.ticket_url if object.ticket_url else ""
+
+                    % set url = "https://benandfrank.com"
+                    % set url_logo_benandfrank = "https://cdn.shopify.com/s/files/1/0838/5577/t/67/assets/header_logo_black_2x.png?397132"
+                    % set website_link = "{0}".format(url)
+                    % set facebook_link = object.partner_id.company_id.social_facebook
+                    % set instagram_link = object.partner_id.company_id.social_instagram
+
+
+                    <style>
+                         body * {
+                            border:solid 1px red;
+                        }
+                        .date_delivery{
+                            line-height: 1.43;
+                            text-align: right;
+                            color: #666666!important;
+                            font-weight:bold;
+                        }
+                        .date_delivery_description{
+                            text-align: right;
+                            color: #666666!important;
+                        }
+                        .logo_bnf{
+                            width: 195.5px;
+                            height: 27px;
+                        }
+                        p{
+                            font-size:14px;
+                            color:#000;
+                        }
+                        .text-center{
+                            text-align:center;
+                        }
+                        .text-order{
+                            font-family: Arial;
+                            font-size: 21px!important;
+                            font-weight: bold;
+                            font-stretch: normal;
+                            font-style: normal;
+                            line-height: 1.14;
+                            letter-spacing: normal;
+                            text-align: right;
+                            color: #000000;
+                        }
+                        .top{
+                            margin-top: 30px;
+                        }
+                        hr{
+                            background-color: #000;
+                        }
+                        .text-capitalize{
+                            text-transform:capitalize;
+                        }
+                        h3{
+                          width: 409px;
+                          height: 20px;
+                          font-family: Arial;
+                          font-size: 22px;
+                          font-weight: bold;
+                          font-stretch: normal;
+                          font-style: normal;
+                          line-height: 1.18;
+                          letter-spacing: 1.1px;
+                          text-align: left;
+                          color: #000000;
+                        }
+                        .text-uppercase{
+                            text-transform: uppercase;
+                        }
+                        .text-product{
+                          font-family: Arial;
+                          font-size: 16px;
+                          font-weight: bold;
+                          font-stretch: normal;
+                          font-style: normal;
+                          line-height: 1.13;
+                          letter-spacing: normal;
+                          text-align: left;
+                          color: #000000;
+                        }
+                        .bottom{
+                            margin-bottom: 30px;
+                        }
+                        table{
+                            width: 100%;
+                        }
+                    </style>
+                    <body>
+                        <div>
+                            <div class="text-center">
+                                <a href="http://www.benandfrank.com/">
+                                    <img align="center"
+                                         src="${url_logo_benandfrank}"
+                                         class="logo_bnf"/>
+                                </a>
+                            </div>
+                            <div>
+                                <hr/>
+                            </div>
+                            <div>
+                                <p class="text-order">
+                                        Order
+                                        number:
+                                        ${object.name}
+                                </p>
+                            </div>
+                            <div class="top">
+                                <p class="date_delivery">
+                                    Date maximum of delivery: 10 Business Days
+                                </p>
+                                <p class="date_delivery_description">
+                                    (If you already paid and sent your prescription)
+                                </p>
+                            </div>
+                            <hr></hr>
+                            <div>
+                                <p class="text-capitalize">
+                                    Hello ${object.partner_id.name},
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    How nice that you bought your Ben &amp; frank!
+                                </p>
+                            </div>
+                            <div class="bottom">
+                                <h3 class="text-uppercase">
+                                    details of your order:
+                                </h3>
+                            </div>
+                            <div>
+                                <table width="100%">
+                                    % if object.order_line:
+                                        % for line in object.order_line:
+                                            <tr>
+                                                <td>
+                                                    <img
+                                                        src="/web/image/product.product/${line.product_id.id}/image"
+                                                        height="100px"
+                                                        width="100px"
+                                                        alt="Product image"/>
+                                                </td>
+                                                <td>
+                                                    <span class="text-product">
+                                                        ${(line.product_uom_qty) | int}
+                                                        ${(line.product_id.name)}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                    % endfor
+                                % endif
+                                </table>
+                            </div>
+                            <div>
+                                <table style="width:100%; text-align: right;">
+                                    <tr>
+                                        <td>
+                                            <p>
+                                                <span style="font-weight:bold;color:#000;">
+                                                    Subtotal:
+                                                </span>
+                                                ${format_amount(object.amount_undiscounted, object.pricelist_id.currency_id)}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p style="font-size:18px;">
+                                                <span style="font-weight:bold;color:#000;">
+                                                    Total:
+                                                </span>
+                                                ${format_amount(object.amount_total, object.pricelist_id.currency_id)}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <hr/>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <h4>
+                                                            Payment Address:
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${invoice_street_name }
+                                                        ${invoice_street_number }
+                                                        ${invoice_street_number2 }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${invoice_l10n_mx_edi_colony }
+                                                        ${invoice_l10n_mx_edi_locality }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${invoice_zip }
+                                                        ${invoice_state_name }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${invoice_country_name }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:10%;">
+                                    </td>
+                                    <td style="width:45%;">
+                                        <table style="width:100%;margin:0 auto">
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <h4 style="font-family:Arial;font-weight:bold;color:#000;display:block;font-size:14px;font-style:normal;font-weight:italic;line-height:110%;letter-spacing:normal;margin:0;margin-bottom:10px;text-align:left">
+                                                            Shipping Address:
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${street_name }
+                                                        ${street_number }
+                                                        ${street_number2 }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${l10n_mx_edi_colony }
+                                                        ${l10n_mx_edi_locality }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                    ${zip }
+                                                    ${state_name }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>
+                                                        ${country_name }
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr/>
+                            <div style="margin-top: 40px;">
+                                <table style="text-align:center;width:100%;">
+                                    <tr>
+                                        <td>
+                                            <p style="
+  font-size: 14px;
+  text-align: center;
+  color: #000000;">
+                                                If your information is wrong,
+                                                let us know (unless you want to
+                                                give them to your neighbor).
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p style="
+  font-size: 14px;
+  text-align: center;
+  color: #000000;">
+                                                We know that you already want
+                                                to try them, so we promise that
+                                                we will hurry.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 40px;padding-bottom: 30px;">
+
+
+                                            % set  path_download =  ""
+                                            % set invoice_link =""
+                                            % if object.access_token:
+                                                %set  path_download=  "?access_token="+ object.access_token + "&amp;report_type=pdf&amp;download=true"
+                                            %endif
+                                            % for invoice in object.invoice_ids:
+
+                                               % set invoice_link = "%s%s%s%s"| format(object.get_base_url() , '/my/invoices/', invoice.id,  path_download)
+
+                                            % endfor
+
+                                            <a href="${invoice_link}"
+                                                               style="
+                                                                  box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.16);
+                                                                  border: solid 2px #ffffff;
+                                                                  background-color: #000000;
+                                                                  font-style: normal;
+                                                                  font-stretch: normal;
+                                                                  line-height: 1.15;
+                                                                  letter-spacing: 2px;
+                                                                  text-align: center;
+                                                                  color: #ffffff;
+                                                                  padding: 20px 30px 20px 30px;
+                                                                  text-transform: uppercase;
+                                                                  font-weight:bold;
+                                                                ">
+                                                            Invoice your order
+                                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top:30px;">
+                                            <p style="font-size:14px;color:#000;">
+                                                If we don't have your recipe yet ... reply to this email or write to us at hola@benandfrank.com and attach the image of your recipe in the email.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <hr style="margin-top: 50px;"/>
+                            <div style="margin:0 auto;text-align: center;mergin-top:30px;">
+                                <h4 style="
+                                          font-size: 16px;
+                                          font-weight: bold;
+                                          font-style: normal;
+                                          font-stretch: normal;
+                                          line-height: 1.13;
+                                          letter-spacing: 1.6px;
+                                          text-align: center;
+                                          color: #000000;text-transform:uppercase;
+                                          ">
+                                        You have doubts?
+                                </h4>
+                            </div>
+                            <div style="margin-top: 30px;margin-bottom: 30px;">
+                                <p style="margin:0;padding-bottom:0;text-align: center;font-size:14px;text-transform: uppercase;color: #000000;letter-spacing: 1.4px;">
+                                    reply to this email and we will get the
+                                    batteries to answer you as quickly as
+                                    possible
+                                </p>
+                                <p style="margin:0;padding-bottom:0;text-align: center;font-size:14px;text-transform: uppercase;color: #000000;letter-spacing: 1.4px;margin-top: 10px;">
+                                    call us at (55) 1205 1050 from Monday to
+                                    Sunday from 9am to 7pm
+                                </p>
+                            </div>
+                            <hr/>
+                            <table width="100%" border="0" cellspacing="0" cellpading="0">
+                                <tr>
+                                    <td align="center" class="social-icons" style="align-items: center;margin: 30px auto;">
+                                        <a href="${ website_link }" style="color: inherit;font-weight: bold;text-decoration: none;padding: 0 20px !important;">
+                                            <img class="social-image" src="https://i.postimg.cc/CdxwX6v9/website-icon.png" alt="go to website" style="height: 24px;" />
+                                        </a>
+                                        <a href="${ instagram_link }" style="color: inherit;font-weight: bold;text-decoration: none;padding: 0 20px !important;">
+                                            <img class="social-image" src="https://i.postimg.cc/F1Ch4g8z/instagram-icon.png" alt="instagram" style="height: 24px;" />
+                                        </a>
+                                        <a href="${ facebook_link }" style="color: inherit;font-weight: bold;text-decoration: none;padding: 0 20px !important;">
+                                            <img class="social-image" src="https://i.postimg.cc/0KjxSbM9/facebook-icon.png" alt="facebook" style="height: 24px;" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="margin:0 auto;text-align: center;">
+                                <div style="margin:0;padding-bottom:0;text-align: center;margin-top: 10px;">
+                                    <p style="font-size:10px;">
+                                        Ben &amp; frank
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                </div>
+            </field>
+        <field name="report_name">${(object.name or '').replace('/','_')}
+        </field>
+        <field name="lang">${object.partner_id.lang}</field>
+    </record>
+</odoo>
